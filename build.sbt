@@ -1,34 +1,35 @@
+import Settings._
+
 enablePlugins(ScalaJSBundlerPlugin)
 
-name := "todo-list"
-
-scalaVersion := "2.13.2"
-
-
-npmDependencies in Compile ++= Seq(
-  "react" -> "16.13.1",
-  "react-dom" -> "16.13.1",
-  "react-proxy" -> "1.1.8"
-)
-
-npmDevDependencies in Compile ++= Seq(
-  "file-loader" -> "6.0.0",
-  "style-loader" -> "1.2.1",
-  "css-loader" -> "3.5.3",
-  "html-webpack-plugin" -> "4.3.0",
-  "copy-webpack-plugin" -> "5.1.1",
-  "webpack-merge" -> "4.2.2"
-)
-
-libraryDependencies ++= Seq(
-  "me.shadaj" %%% "slinky-web" % "0.6.5",
-  "me.shadaj" %%% "slinky-hot" % "0.6.5",
-  "org.scalatest" %%% "scalatest" % "3.1.1" % Test
-)
-
-scalacOptions += "-Ymacro-annotations"
+// TODO: ホットリロードの設定。可能ならSettingsに切り出したい
 Global / onChangedBuildSource := ReloadOnSourceChanges
 
+lazy val root: Project = (project in file("."))
+  .settings(name := "todo-list")
+  .settings(baseSettings)
+  .settings(
+    libraryDependencies ++= Seq(
+      "me.shadaj" %%% "slinky-web" % "0.6.5",
+      "me.shadaj" %%% "slinky-hot" % "0.6.5",
+      "org.scalatest" %%% "scalatest" % "3.1.1" % Test
+    ),
+    npmDependencies in Compile ++= Seq(
+      "react" -> "16.13.1",
+      "react-dom" -> "16.13.1",
+      "react-proxy" -> "1.1.8"
+    ),
+    npmDevDependencies in Compile ++= Seq(
+      "file-loader" -> "6.0.0",
+      "style-loader" -> "1.2.1",
+      "css-loader" -> "3.5.3",
+      "html-webpack-plugin" -> "4.3.0",
+      "copy-webpack-plugin" -> "5.1.1",
+      "webpack-merge" -> "4.2.2"
+    )
+  )
+
+// TODO webpack系の設定。切り出したい
 version in webpack := "4.43.0"
 version in startWebpackDevServer := "3.11.0"
 
