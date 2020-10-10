@@ -25,10 +25,12 @@ libraryDependencies ++= Seq(
   "me.shadaj" %%% "slinky-hot" % "0.6.5",
   "org.scalatest" %%% "scalatest" % "3.1.1" % Test
 )
+
 scalacOptions += "-Ymacro-annotations"
+Global / onChangedBuildSource := ReloadOnSourceChanges
 
 version in webpack := "4.43.0"
-version in startWebpackDevServer:= "3.11.0"
+version in startWebpackDevServer := "3.11.0"
 
 webpackResources := baseDirectory.value / "webpack" * "*"
 
